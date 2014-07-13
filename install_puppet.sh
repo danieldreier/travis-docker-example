@@ -21,7 +21,6 @@ is_installed() {
       rpm -qi "$package" > /dev/null 2>&1 && return 0
       ;;
     debian)
-      exit 1
       dpkg-query --status "$package" >/dev/null 2>&1 && return 0
       ;;
     arch)
@@ -43,6 +42,7 @@ ensure_package_present() {
   detect_os
   case $DistroBasedOn in
     redhat)
+      exit 1
       yum -y --quiet install "$package"
       ;;
     debian)
