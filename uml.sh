@@ -69,6 +69,6 @@ if [ -z "${DISTRO}" ] ; then
 fi
 
 cp tests/${DISTRO}/Dockerfile .
-docker build --rm=true . && touch success || exit 1
-#docker run puppet-test puppet --version || exit 1
-#docker run puppet-test facter -v || exit 1
+docker build --rm=true . && touch INSTALL_PASSED
+docker run puppet-test puppet --version && touch PUPPET_DETECTED
+docker run puppet-test facter -v && touch FACTER_DETECTED
