@@ -63,5 +63,12 @@ docker -d &
 sleep 5
 
 # Use docker
-DISTRO='ubuntu'
-docker run ${DISTRO} /bin/echo hello world
+if [ -z "${DISTRO}" ] ; then
+  echo "ERROR: no distro specified"
+  exit 1
+fi
+
+cp tests/${DISTRO}/Dockerfile .
+docker build --rm=true --tag="puppet-test" . || exit 1
+docker run puppet-test puppet --version || exit 1
+docker run puppet-test facter -v || exit 1

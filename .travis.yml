@@ -8,6 +8,16 @@ install:
   - sudo apt-get install -y slirp lxc lxc-docker aufs-tools cgroup-lite
   - curl -sLo linux https://github.com/jpetazzo/sekexe/raw/master/uml
   - chmod +x linux
-  
+
 script:
-  - ./linux quiet mem=2G rootfstype=hostfs rw eth0=slirp,,/usr/bin/slirp-fullbolt init=$(pwd)/uml.sh WORKDIR=$(pwd) HOME=$HOME
+  - ./linux quiet mem=2G rootfstype=hostfs rw eth0=slirp,,/usr/bin/slirp-fullbolt init=$(pwd)/uml.sh WORKDIR=$(pwd) HOME=$HOME DISTRO=$DISTRO
+
+env:
+  - DISTRO="arch"
+  - DISTRO="centos6"
+  - DISTRO="centos7"
+  - DISTRO="debian-wheezy"
+  - DISTRO="debian-squeeze"
+  - DISTRO="fedora20"
+  - DISTRO="ubuntu1204"
+  - DISTRO="ubuntu1404"
