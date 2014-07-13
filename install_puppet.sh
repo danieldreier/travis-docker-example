@@ -21,6 +21,7 @@ is_installed() {
       rpm -qi "$package" > /dev/null 2>&1 && return 0
       ;;
     debian)
+      exit 1
       dpkg-query --status "$package" >/dev/null 2>&1 && return 0
       ;;
     arch)
@@ -46,8 +47,7 @@ ensure_package_present() {
       ;;
     debian)
       apt-get -qq update
-      #apt-get -qq install -y "$package" > /dev/null
-      apt-get install -y "$package" ##DEBUG
+      apt-get -qq install -y "$package" > /dev/null
       ;;
     arch)
       # Update the pacman repositories
@@ -189,8 +189,7 @@ ensure_puppet() {
         ensure_package_present "ca-certificates"
         REPO_URL="https://apt.puppetlabs.com/puppetlabs-release-${PSUEDONAME}.deb"
         repo_path=$(mktemp)
-        ##wget --quiet --output-document=${repo_path} ${REPO_URL}
-        wget --output-document=${repo_path} ${REPO_URL} ##DEBUG
+        wget --quiet --output-document=${repo_path} ${REPO_URL}
         dpkg --install ${repo_path}
         apt-get -qq update
         rm ${repo_path}
