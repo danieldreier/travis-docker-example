@@ -42,7 +42,6 @@ ensure_package_present() {
   detect_os
   case $DistroBasedOn in
     redhat)
-      exit 1
       yum -y --quiet install "$package"
       ;;
     debian)
